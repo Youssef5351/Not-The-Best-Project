@@ -12,7 +12,7 @@ return [
     */
         'paths' => ['api/*','sanctum/csrf-cookie','api/signup'],
         'allowed_methods' => ['POST', 'GET', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
-        'allowed_origins' => ['http://localhost:3000'],
+        'allowed_origins' => ['https://vanilla2-gray.vercel.app'],
         'allowed_origins_patterns' => [],
         'allowed_headers' => ['*'],
         'exposed_headers' => ['*'],
