@@ -32,13 +32,20 @@ class AuthController extends Controller
             return response([
                 'user' => $user,
                 'token' => $token,
-            ], 201);
+            ], 
+                                return response()->json([/* your response data */])
+        ->header('Access-Control-Allow-Credentials', 'true')
+        ->header('Access-Control-Allow-Origin', 'https://vanilla2-gray.vercel.app')
+        ->header('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        ->header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Origin, Authorization');
+                            201);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Signup error: '.$e->getMessage());
             return response()->json(['error' => 'Signup failed: '.$e->getMessage()], 500);
         }
     }
+    
     public function login(LoginRequest $request)
     {
         $request->validate([
