@@ -12,33 +12,44 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function signup(SignupRequest $request)
-    {
-        DB::beginTransaction();
-        try {
-            \Log::info('Signup attempt', $request->all());
-            $data = $request->validated();
+public function signup(SignupRequest $request)
+{
+    \Log::info('Received signup request:', $request->all());
 
-            $user = User::create([
-                'first_name' => $data['first_name'],
-                'last_name' => $data['last_name'],
-                'email' => $data['email'],
-                'password' => bcrypt($data['password']),
-            ]);
-            $token = $user->createToken('main')->plainTextToken;
+    DB::beginTransaction();
+    try {
+        \Log::info('Signup attempt', $request->all());
+        $data = $request->validated();
 
-            DB::commit();
+        \Log::info('Validated signup data:', $data);
 
-            return response([
-                'user' => $user,
-                'token' => $token,
-            ], 201);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Signup error: '.$e->getMessage());
-            return response()->json(['error' => 'Signup failed: '.$e->getMessage()], 500);
-        }
+        $user = User::create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+        ]);
+
+        $token = $user->createToken('main')->plainTextToken;
+
+        \Log::info('User created successfully:', ['user_id' => $user->id]);
+
+        DB::commit();
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token,
+        ], 201);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        \Log::error('Signup error: '.$e->getMessage(), [
+            'request_data' => $request->all(),
+            'exception' => $e,
+        ]);
+        return response()->json(['error' => 'Signup failed: '.$e->getMessage()], 500);
     }
+}
+
     
     public function login(LoginRequest $request)
     {
