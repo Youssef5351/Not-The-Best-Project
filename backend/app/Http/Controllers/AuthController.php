@@ -15,6 +15,7 @@ class AuthController extends Controller
 public function signup(SignupRequest $request)
 {
     \Log::info('Received signup request:', $request->all());
+     \Log::info('Signup endpoint reached');
 
     DB::beginTransaction();
     try {
