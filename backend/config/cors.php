@@ -1,21 +1,11 @@
 <?php
-
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Laravel CORS Options
-    |--------------------------------------------------------------------------
-    |
-    | The allowed_methods and allowed_origins options can accept any
-    | string or array, the allowed_headers option must be an array.
-    |
-    */
-
-    'supportsCredentials' => true,
-'allowedOrigins' => ['*'],
-'allowedOriginsPatterns' => [],
-'allowedHeaders' => ['*'],
-'allowedMethods' => ['*'],
-'exposedHeaders' => [],
-'maxAge' => 0,
+    'paths' => ['api/*'],
+    'allowed_methods' => ['*'],
+    'allowed_origins' => ['https://vanilla2-gray.vercel.app'],
+    'allowed_origins_patterns' => [],
+    'allowed_headers' => ['*'],
+    'exposed_headers' => [],
+    'max_age' => 0,
+    'supports_credentials' => true,
 ];
