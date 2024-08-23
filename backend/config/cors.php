@@ -1,6 +1,7 @@
 <?php
+
 return [
-    'paths' => ['api/*'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
     'allowed_methods' => ['*'],
     'allowed_origins' => ['https://vanilla2-gray.vercel.app'],
     'allowed_origins_patterns' => [],
